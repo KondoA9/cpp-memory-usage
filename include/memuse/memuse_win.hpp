@@ -27,14 +27,14 @@ namespace a9 {
             }
         }
 
-        // Return memory usage [%]
-        size_t GetMemoryUsage() {
-            return _internal::GetMemoryStatus().dwMemoryLoad;
-        }
-
         // Return total physical memory [byte]
         size_t GetTotalPhysicalMemory() {
             return _internal::GetMemoryStatus().ullTotalPhys;
+        }
+
+        // Return memory usage [%]
+        size_t GetMemoryUsage() {
+            return _internal::GetMemoryStatus().dwMemoryLoad;
         }
 
         // Return private memory usage [byte]

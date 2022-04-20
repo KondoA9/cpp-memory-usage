@@ -15,18 +15,18 @@ namespace a9 {
             }
         }
 
+        // Return total physical memory [byte]
+        size_t GetTotalPhysicalMemory() {
+            const auto info = _internal::GetSysInfo();
+            return info.totalram * info.mem_unit;
+        }
+
         // Return memory usage [%]
         size_t GetMemoryUsage() {
             const auto info       = _internal::GetSysInfo();
             const size_t totalMem = info.totalram * info.mem_unit;
             const size_t useMem   = (info.totalram - info.freeram) * info.mem_unit;
             return useMem / totalMem;
-        }
-
-        // Return total physical memory [byte]
-        size_t GetTotalPhysicalMemory() {
-            const auto info = _internal::GetSysInfo();
-            return info.totalram * info.mem_unit;
         }
 
         // Return private memory usage [byte]
