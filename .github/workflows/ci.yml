@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  windows:
+    name: CI for Windows
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Debug ..
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build
+        run: msbuild "build\memuse_test.vcxproj" /p:Configuration=Debug /p:Platform=x64
+
+      - name: Run
+        run: .\bin\memuse_test.exe
+
+  macOS:
+    name: CI for macOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Debug ..
+
+      - name: Build
+        run: |
+          cd build
+          make
+
+      - name: Run
+        run: ./bin/memuse_test
+  linux:
+    name: CI for Linux
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Debug ..
+
+      - name: Build
+        run: |
+          cd build
+          make
+
+      - name: Run
+        run: ./bin/memuse_test
