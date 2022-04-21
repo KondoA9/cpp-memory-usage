@@ -27,24 +27,26 @@ namespace a9 {
             }
         }
 
+        // Functions in this namespace are not implemented on some platforms.
+        namespace platform {
+            // Return total virtual memory [byte]
+            size_t GetTotalVirtuallMemory() {
+                return _internal::GetMemoryStatus().ullTotalPageFile;
+            }
+
+            // Return virtual memory usage of the process [byte]
+            size_t GetProcessVirtualMemoryUsage() {
+                return _internal::GetMemoryInfo().PrivateUsage;
+            }
+        }
+
         // Return total physical memory [byte]
         size_t GetTotalPhysicalMemory() {
             return _internal::GetMemoryStatus().ullTotalPhys;
         }
-
-        // Return total virtual memory [byte]
-        size_t GetTotalVirtuallMemory() {
-            return _internal::GetMemoryStatus().ullTotalPageFile;
-        }
-
         // Return physical memory usage of the process [byte]
         size_t GetProcessPhysicalMemoryUsage() {
             return _internal::GetMemoryInfo().WorkingSetSize;
-        }
-
-        // Return virtual memory usage of the process [byte]
-        size_t GetProcessVirtualMemoryUsage() {
-            return _internal::GetMemoryInfo().PrivateUsage;
         }
 
         // Return memory usage [%]

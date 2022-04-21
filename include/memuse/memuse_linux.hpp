@@ -43,26 +43,29 @@ namespace a9 {
             }
         }
 
+        // Functions in this namespace are not implemented on some platforms.
+        namespace platform {
+            // Return total virtual memory [byte]
+            size_t GetTotalVirtuallMemory() {
+                const auto info = _internal::GetSysInfo();
+                return (info.totalram + info.totalswap) * info.mem_unit;
+            }
+
+            // Return virtual memory usage of the process [byte]
+            size_t GetProcessVirtualMemoryUsage() {
+                return _internal::GetValueFromProcStatus("VmSize:") * 1024;  // KB to Byte
+            }
+        }
+
         // Return total physical memory [byte]
         size_t GetTotalPhysicalMemory() {
             const auto info = _internal::GetSysInfo();
             return info.totalram * info.mem_unit;
         }
 
-        // Return total virtual memory [byte]
-        size_t GetTotalVirtuallMemory() {
-            const auto info = _internal::GetSysInfo();
-            return (info.totalram + info.totalswap) * info.mem_unit;
-        }
-
         // Return physical memory usage of the process [byte]
         size_t GetProcessPhysicalMemoryUsage() {
             return _internal::GetValueFromProcStatus("VmRSS:") * 1024;  // KB to Byte
-        }
-
-        // Return virtual memory usage of the process [byte]
-        size_t GetProcessVirtualMemoryUsage() {
-            return _internal::GetValueFromProcStatus("VmSize:") * 1024;  // KB to Byte
         }
 
         // Return private memory usage [byte]

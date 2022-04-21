@@ -39,25 +39,21 @@ void printSeparator() {
 
 int main() {
     printMemory("Total physical memory", a9::memory::GetTotalPhysicalMemory);
-    printMemory("Total virtual memory", a9::memory::GetTotalVirtuallMemory);
     printNumber("Memory usage", a9::memory::GetMemoryUsage(), "%");
     printSeparator();
 
     std::vector<size_t> vec(1000000);
     printMemory("Process physical usage", a9::memory::GetProcessPhysicalMemoryUsage);
-    printMemory("Process virtual usage", a9::memory::GetProcessVirtualMemoryUsage);
     printSeparator();
 
     {
         std::vector<size_t> vec2(1000000);
         printMemory("Process physical usage", a9::memory::GetProcessPhysicalMemoryUsage);
-        printMemory("Process virtual usage", a9::memory::GetProcessVirtualMemoryUsage);
         printSeparator();
     }
 
     std::vector<size_t> vec3(1000000);
     printMemory("Process physical usage", a9::memory::GetProcessPhysicalMemoryUsage);
-    printMemory("Process virtual usage", a9::memory::GetProcessVirtualMemoryUsage);
     printSeparator();
 
     return 0;

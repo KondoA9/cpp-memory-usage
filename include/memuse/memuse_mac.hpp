@@ -37,28 +37,18 @@ namespace a9 {
             return static_cast<size_t>(total);
         }
 
-        // Return total virtual memory [byte]
-        size_t GetTotalVirtuallMemory() {
-            return0;
-        }
-
         // Return physical memory usage of the process [byte]
         size_t GetProcessPhysicalMemoryUsage() {
             task_t targetTask = mach_task_self();
-            task_basic_info ti;
-            mach_msg_type_number_t count = TASK_BASIC_INFO_64_COUNT;
+            task_vm_info_data_t ti;
+            mach_msg_type_number_t count = TASK_VM_INFO_COUNT;
 
-            const auto result = task_info(targetTask, TASK_BASIC_INFO_64, reinterpret_cast<task_info_t>(&ti), &count);
+            const auto result = task_info(targetTask, TASK_VM_INFO, reinterpret_cast<task_info_t>(&ti), &count);
             if (result == KERN_SUCCESS) {
-                return ti.resident_size;
+                return ti.phys_footprint;
             } else {
                 return 0;
             }
-        }
-
-        // Return virtual memory usage of the process [byte]
-        size_t GetProcessVirtualMemoryUsage() {
-            return 0;
         }
 
         // Return memory usage [%]
