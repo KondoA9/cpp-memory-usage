@@ -37,7 +37,7 @@ namespace a9 {
             return _internal::GetMemoryStatus().ullTotalPageFile;
         }
 
-        // Return physical memory usage [byte]
+        // Return physical memory usage of the process [byte]
         size_t GetProcessPhysicalMemoryUsage() {
             return _internal::GetMemoryInfo().WorkingSetSize;
         }
