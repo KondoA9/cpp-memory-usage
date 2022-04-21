@@ -32,14 +32,24 @@ namespace a9 {
             return _internal::GetMemoryStatus().ullTotalPhys;
         }
 
+        // Return total virtual memory [byte]
+        size_t GetTotalVirtuallMemory() {
+            return _internal::GetMemoryStatus().ullTotalPageFile;
+        }
+
+        // Return physical memory usage [byte]
+        size_t GetProcessPhysicalMemoryUsage() {
+            return _internal::GetMemoryInfo().WorkingSetSize;
+        }
+
+        // Return virtual memory usage of the process [byte]
+        size_t GetProcessVirtualMemoryUsage() {
+            return _internal::GetMemoryInfo().PrivateUsage;
+        }
+
         // Return memory usage [%]
         size_t GetMemoryUsage() {
             return _internal::GetMemoryStatus().dwMemoryLoad;
-        }
-
-        // Return private memory usage [byte]
-        size_t GetProcessMemoryUsage() {
-            return _internal::GetMemoryInfo().PrivateUsage;
         }
     }
 }
