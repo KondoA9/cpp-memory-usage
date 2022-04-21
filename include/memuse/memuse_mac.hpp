@@ -37,20 +37,13 @@ namespace a9 {
             return static_cast<size_t>(total);
         }
 
-        // Return memory usage [%]
-        size_t GetMemoryUsage() {
-            const auto pagesize = _internal::GetPageSize();
-            const auto vmstat   = _internal::GetHostStatistics();
-
-            const auto freeMem  = (vmstat.free_count + vmstat.inactive_count) * pagesize;
-            const auto totalMem = GetTotalPhysicalMemory();
-
-            return 100 * (totalMem - freeMem) / totalMem;
+        // Return total virtual memory [byte]
+        size_t GetTotalVirtuallMemory() {
+            return0;
         }
 
-        // Return RSS [byte]
-        // The value may be incorrect
-        size_t GetProcessMemoryUsage() {
+        // Return physical memory usage of the process [byte]
+        size_t GetProcessPhysicalMemoryUsage() {
             task_t targetTask = mach_task_self();
             task_basic_info ti;
             mach_msg_type_number_t count = TASK_BASIC_INFO_64_COUNT;
@@ -61,6 +54,22 @@ namespace a9 {
             } else {
                 return 0;
             }
+        }
+
+        // Return virtual memory usage of the process [byte]
+        size_t GetProcessVirtualMemoryUsage() {
+            return 0;
+        }
+
+        // Return memory usage [%]
+        size_t GetMemoryUsage() {
+            const auto pagesize = _internal::GetPageSize();
+            const auto vmstat   = _internal::GetHostStatistics();
+
+            const auto freeMem  = (vmstat.free_count + vmstat.inactive_count) * pagesize;
+            const auto totalMem = GetTotalPhysicalMemory();
+
+            return 100 * (totalMem - freeMem) / totalMem;
         }
     }
 }
