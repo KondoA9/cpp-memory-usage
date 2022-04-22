@@ -9,13 +9,13 @@
 namespace a9 {
     namespace memory {
         namespace _internal {
-            struct sysinfo GetSysInfo() {
+            inline struct sysinfo GetSysInfo() {
                 struct sysinfo memInfo;
                 sysinfo(&memInfo);
                 return memInfo;
             }
 
-            int ParseLine(const std::string& line) {
+            inline int ParseLine(const std::string& line) {
                 std::string n = "";
                 for (const auto& c : line) {
                     if ('0' <= c && c <= '9') {
@@ -25,7 +25,7 @@ namespace a9 {
                 return std::stoi(n);
             }
 
-            size_t GetValueFromProcStatus(const char* label) {
+            inline size_t GetValueFromProcStatus(const char* label) {
                 const auto len = strlen(label);
                 std::ifstream stream("/proc/self/status");
                 std::string line;
@@ -46,30 +46,30 @@ namespace a9 {
         // Functions in this namespace are not implemented on some platforms.
         namespace platform {
             // Return total virtual memory [byte]
-            size_t GetTotalVirtuallMemory() {
+            inline size_t GetTotalVirtuallMemory() {
                 const auto info = _internal::GetSysInfo();
                 return (info.totalram + info.totalswap) * info.mem_unit;
             }
 
             // Return virtual memory usage of the process [byte]
-            size_t GetProcessVirtualMemoryUsage() {
+            inline size_t GetProcessVirtualMemoryUsage() {
                 return _internal::GetValueFromProcStatus("VmSize:") * 1024;  // KB to Byte
             }
         }
 
         // Return total physical memory [byte]
-        size_t GetTotalPhysicalMemory() {
+        inline size_t GetTotalPhysicalMemory() {
             const auto info = _internal::GetSysInfo();
             return info.totalram * info.mem_unit;
         }
 
         // Return physical memory usage of the process [byte]
-        size_t GetProcessPhysicalMemoryUsage() {
+        inline size_t GetProcessPhysicalMemoryUsage() {
             return _internal::GetValueFromProcStatus("VmRSS:") * 1024;  // KB to Byte
         }
 
         // Return private memory usage [byte]
-        size_t GetProcessPrivateMemoryUsage() {
+        inline size_t GetProcessPrivateMemoryUsage() {
             size_t size = 0, resident = 0, share = 0;
 
             std::ifstream stream("/proc/self/statm");
@@ -80,7 +80,7 @@ namespace a9 {
         }
 
         // Return memory usage [%]
-        size_t GetMemoryUsage() {
+        inline size_t GetMemoryUsage() {
             const auto info       = _internal::GetSysInfo();
             const size_t totalMem = info.totalram * info.mem_unit;
             const size_t useMem   = (info.totalram - info.freeram) * info.mem_unit;
