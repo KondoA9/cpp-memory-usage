@@ -14,4 +14,4 @@ or
 #include "memuse/memuse_{win, mac, linux}"
 ```
 
-Sample code is [here](https://github.com/KondoA9/cpp-memory-usage/blob/main/main.cpp).
+Sample code is [here](https://github.com/KondoA9/cpp-memory-usage/blob/main/test/main.cpp).
