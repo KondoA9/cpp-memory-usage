@@ -19,8 +19,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ../bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ../bin)
 
 include_directories(
-	SYSTEM "deps/include/"
-	"src/"
+	"./include/"
 )
 
-add_executable(memuse_test "main.cpp")
+add_executable(memuse_test
+	"test/main.cpp"
+	"test/util.cpp"
+)
