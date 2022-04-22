@@ -1,5 +1,8 @@
 #include "util.hpp"
 
+// for checking ODR
+#include "memuse.hpp"
+
 namespace a9 {
     namespace test {
         namespace util {
