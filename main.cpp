@@ -9,7 +9,6 @@ enum class Unit {
     KB,
     MB,
     GB,
-    TB,
 };
 
 constexpr auto UNIT        = Unit::MB;
@@ -21,8 +20,7 @@ constexpr auto UnitString  = UNIT == Unit::Byte ? "Byte"
 constexpr auto UnitDivider = UNIT == Unit::Byte ? 1
                              : UNIT == Unit::KB ? 1024
                              : UNIT == Unit::MB ? 1024 * 1024
-                             : UNIT == Unit::GB ? 1024 * 1024 * 1024
-                                                : 1024 * 1024 * 1024 * 1024;
+                                                : 1024 * 1024 * 1024;
 
 template <typename T>
 void printNumber(const std::string& label, T number, const char* unit) {
@@ -38,6 +36,9 @@ void printSeparator() {
 }
 
 int main() {
+    std::cout << "cpp-memory-usage v" << CPP_MEMORY_USAGE_VERSION_STRING << std::endl;
+    printSeparator();
+
     printMemory("Total physical memory", a9::memory::GetTotalPhysicalMemory);
     printNumber("Memory usage", a9::memory::GetMemoryUsage(), "%");
     printSeparator();
