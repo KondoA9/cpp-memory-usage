@@ -1,5 +1,3 @@
-#include <functional>
-#include <iostream>
 #include <vector>
 
 #include "memuse.hpp"
